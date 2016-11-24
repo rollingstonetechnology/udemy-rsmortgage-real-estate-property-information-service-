@@ -1,19 +1,27 @@
 package com.rollingstone.domain;
 
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "rsmortgage_background_check_order")
@@ -26,23 +34,27 @@ public class BackgroundCheckOrder {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
+	@OneToOne
+	@JoinColumn(name="loan_application_id")
+	private LoanApplication loanApplication;
+	
 	@Column(nullable = false)
 	private boolean isCreditCheckOrdered;
 	
 	@Temporal(TemporalType.DATE)
-	@Column(name = "customer_since", unique = true, nullable = false, length = 10)
+	@Column(name = "credit_check_order_date", unique = true, nullable = false, length = 10)
 	Date	creditCheckOderedDate;
 	
 	@Column(nullable = false)
 	private boolean isCriminalCheckOrder;
 	
 	@Temporal(TemporalType.DATE)
-	@Column(name = "customer_since", unique = true, nullable = false, length = 10)
-	Date criminalCheckOderedDat;
+	@Column(name = "criminal_check_order_date", unique = true, nullable = false, length = 10)
+	Date criminalCheckOderedDate;
 	
-	
-	
-	List<Address> pastYearsAddresses;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "backgroundCheckOrder" , cascade=CascadeType.ALL)
+    @JsonManagedReference
+	private Set<BackgroundCheckOrderDetail> pastYearsAddresses = new HashSet<BackgroundCheckOrderDetail>();
 	
 	public BackgroundCheckOrder(){
 		
@@ -80,21 +92,31 @@ public class BackgroundCheckOrder {
 		this.isCriminalCheckOrder = isCriminalCheckOrder;
 	}
 
-	public Date getCriminalCheckOderedDat() {
-		return criminalCheckOderedDat;
+	public Date getCriminalCheckOderedDate() {
+		return criminalCheckOderedDate;
 	}
 
-	public void setCriminalCheckOderedDat(Date criminalCheckOderedDat) {
-		this.criminalCheckOderedDat = criminalCheckOderedDat;
+	public void setCriminalCheckOderedDate(Date criminalCheckOderedDate) {
+		this.criminalCheckOderedDate = criminalCheckOderedDate;
 	}
 
 	
 
-	public List<Address> getPastYearsAddresses() {
+	
+
+	public LoanApplication getLoanApplication() {
+		return loanApplication;
+	}
+
+	public void setLoanApplication(LoanApplication loanApplication) {
+		this.loanApplication = loanApplication;
+	}
+
+	public Set<BackgroundCheckOrderDetail> getPastYearsAddresses() {
 		return pastYearsAddresses;
 	}
 
-	public void setPastYearsAddresses(List<Address> pastYearsAddresses) {
+	public void setPastYearsAddresses(Set<BackgroundCheckOrderDetail> pastYearsAddresses) {
 		this.pastYearsAddresses = pastYearsAddresses;
 	}
 
@@ -102,7 +124,7 @@ public class BackgroundCheckOrder {
 	public String toString() {
 		return "BackgroundCheckOrder [id=" + id + ", isCreditCheckOrdered=" + isCreditCheckOrdered
 				+ ", creditCheckOderedDate=" + creditCheckOderedDate + ", isCriminalCheckOrder=" + isCriminalCheckOrder
-				+ ", criminalCheckOderedDat=" + criminalCheckOderedDat + ", creditScoreFExperian="
+				+ ", criminalCheckOderedDat=" + criminalCheckOderedDate + ", creditScoreFExperian="
 				+ ", pastYearsAddresses=" + pastYearsAddresses + "]";
 	}
 
@@ -111,7 +133,7 @@ public class BackgroundCheckOrder {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((creditCheckOderedDate == null) ? 0 : creditCheckOderedDate.hashCode());
-		result = prime * result + ((criminalCheckOderedDat == null) ? 0 : criminalCheckOderedDat.hashCode());
+		result = prime * result + ((criminalCheckOderedDate == null) ? 0 : criminalCheckOderedDate.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + (isCreditCheckOrdered ? 1231 : 1237);
 		result = prime * result + (isCriminalCheckOrder ? 1231 : 1237);
@@ -134,10 +156,10 @@ public class BackgroundCheckOrder {
 				return false;
 		} else if (!creditCheckOderedDate.equals(other.creditCheckOderedDate))
 			return false;
-		if (criminalCheckOderedDat == null) {
-			if (other.criminalCheckOderedDat != null)
+		if (criminalCheckOderedDate == null) {
+			if (other.criminalCheckOderedDate != null)
 				return false;
-		} else if (!criminalCheckOderedDat.equals(other.criminalCheckOderedDat))
+		} else if (!criminalCheckOderedDate.equals(other.criminalCheckOderedDate))
 			return false;
 		if (id != other.id)
 			return false;
@@ -156,13 +178,13 @@ public class BackgroundCheckOrder {
 	public BackgroundCheckOrder(long id, boolean isCreditCheckOrdered, Date creditCheckOderedDate,
 			boolean isCriminalCheckOrder, Date criminalCheckOderedDat, int creditScoreFExperian,
 			int creditScoreFromTransunion, int creditScoreFromOthers, int averageCreditScore,
-			List<Address> pastYearsAddresses) {
+			Set<BackgroundCheckOrderDetail> pastYearsAddresses) {
 		super();
 		this.id = id;
 		this.isCreditCheckOrdered = isCreditCheckOrdered;
 		this.creditCheckOderedDate = creditCheckOderedDate;
 		this.isCriminalCheckOrder = isCriminalCheckOrder;
-		this.criminalCheckOderedDat = criminalCheckOderedDat;
+		this.criminalCheckOderedDate = criminalCheckOderedDat;
 		this.pastYearsAddresses = pastYearsAddresses;
 	}
 	

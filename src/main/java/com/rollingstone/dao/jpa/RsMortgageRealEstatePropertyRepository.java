@@ -11,9 +11,9 @@ import com.rollingstone.domain.RealEstateProperty;
 
 
 public interface RsMortgageRealEstatePropertyRepository extends PagingAndSortingRepository<RealEstateProperty, Long> {
-    List<RealEstateProperty> findRealEstatePropertyByForClosed();
-    List<RealEstateProperty> findRealEstatePropertyByDamaged();
-    List<RealEstateProperty> findRealEstatePropertyByCurrentPrice();
+    List<RealEstateProperty> findRealEstatePropertyByIsForeClosed(boolean idForeClosed);
+    List<RealEstateProperty> findRealEstatePropertyByisDamaged(boolean isDamaged);
+    List<RealEstateProperty> findRealEstatePropertyByCurrentPrice(double currentPrice);
 
     Page findAll(Pageable pageable);
 }

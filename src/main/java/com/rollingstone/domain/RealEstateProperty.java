@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * A User POJO serving as an Entity as well as a Data Transfer Object i.e DTO
  */
 @Entity
-@Table(name = "rsmortgage_account")
+@Table(name = "rsmortgage_real_estate_property")
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class RealEstateProperty {
@@ -26,7 +26,7 @@ public class RealEstateProperty {
 	private long id;
 	
 	@OneToOne
-	@JoinColumn(name="account_type_id")
+	@JoinColumn(name="property_type_id")
 	private PropertyType propertyType;
 	
 	@Column(nullable = false)
@@ -59,8 +59,264 @@ public class RealEstateProperty {
 	@Column(nullable = false)
 	private String currentLender;
 	
+	@Column(nullable = false)
+	private int numFloors;
+	
+	@Column(nullable = false)
+	private int numRooms;
+	
+	@Column(nullable = false)
+	private int numFullBaths;
+	
+	@Column(nullable = false)
+	private int numHalfBaths;
+	
+	@Column(nullable = false)
+	private float lotArea;
+	
+	@Column(nullable = false)
+	private int numGaragaes;
+	
+	@Column(nullable = false)
+	private boolean isGagageAttached;
+	
+	@Column(nullable = false)
+	private boolean hasUtilityRoom;
+	
+	@Column(nullable = false)
+	private int numClosets;
+	
+	@Column(nullable = false)
+	private boolean hasStromDoor;
+	
+	@Column(nullable = false)
+	private boolean hasSumpPumpInstalled;
+	
+	@Column(nullable = false)
+	private boolean washerIncluded;
+	
+	@Column(nullable = false)
+	private boolean dryerIncluded;
+	
+	@Column(nullable = false)
+	private boolean refrigeratorIncluded;
+	
+	@Column(nullable = false)
+	private boolean isLAndSCaped;
+	
+	@Column(nullable = false)
+	private boolean sprinklerInstalled;
+	
+	@Column(nullable = false)
+	private boolean dishWasherInstalled;
+	
+	@Column(nullable = false)
+	private boolean fenceInstalled;
+	
+	@Column(nullable = false)
+	private String heatingSopurce;
+	
+	@Column(nullable = false)
+	private boolean acInstalled;
+	
+	@Column(nullable = false)
+	private boolean microwaveInstalled;
+	
+	@Column(nullable = false)
+	private boolean hasBasement;
+	
+	@Column(nullable = false)
+	private boolean isFinishedBasement;
+	
+	public RealEstateProperty(){
+	
+	}
+	public int getNumFloors() {
+		return numFloors;
+	}
+
+	public void setNumFloors(int numFloors) {
+		this.numFloors = numFloors;
+	}
+
+	public int getNumRooms() {
+		return numRooms;
+	}
+
+	public void setNumRooms(int numRooms) {
+		this.numRooms = numRooms;
+	}
+
+	public int getNumFullBaths() {
+		return numFullBaths;
+	}
+
+	public void setNumFullBaths(int numFullBaths) {
+		this.numFullBaths = numFullBaths;
+	}
+
+	public int getNumHalfBaths() {
+		return numHalfBaths;
+	}
+
+	public void setNumHalfBaths(int numHalfBaths) {
+		this.numHalfBaths = numHalfBaths;
+	}
+
+	public float getLotArea() {
+		return lotArea;
+	}
+
+	public void setLotArea(float lotArea) {
+		this.lotArea = lotArea;
+	}
+
+	public int getNumGaragaes() {
+		return numGaragaes;
+	}
+
+	public void setNumGaragaes(int numGaragaes) {
+		this.numGaragaes = numGaragaes;
+	}
+
+	public boolean isGagageAttached() {
+		return isGagageAttached;
+	}
+
+	public void setGagageAttached(boolean isGagageAttached) {
+		this.isGagageAttached = isGagageAttached;
+	}
+
+	public boolean isHasUtilityRoom() {
+		return hasUtilityRoom;
+	}
+
+	public void setHasUtilityRoom(boolean hasUtilityRoom) {
+		this.hasUtilityRoom = hasUtilityRoom;
+	}
+
+	public int getNumClosets() {
+		return numClosets;
+	}
+
+	public void setNumClosets(int numClosets) {
+		this.numClosets = numClosets;
+	}
+
+	public boolean isHasStromDoor() {
+		return hasStromDoor;
+	}
+
+	public void setHasStromDoor(boolean hasStromDoor) {
+		this.hasStromDoor = hasStromDoor;
+	}
+
+	public boolean isHasSumpPumpInstalled() {
+		return hasSumpPumpInstalled;
+	}
+
+	public void setHasSumpPumpInstalled(boolean hasSumpPumpInstalled) {
+		this.hasSumpPumpInstalled = hasSumpPumpInstalled;
+	}
+
+	public boolean isWasherIncluded() {
+		return washerIncluded;
+	}
+
+	public void setWasherIncluded(boolean washerIncluded) {
+		this.washerIncluded = washerIncluded;
+	}
+
+	public boolean isDryerIncluded() {
+		return dryerIncluded;
+	}
+
+	public void setDryerIncluded(boolean dryerIncluded) {
+		this.dryerIncluded = dryerIncluded;
+	}
+
+	public boolean isRefrigeratorIncluded() {
+		return refrigeratorIncluded;
+	}
+
+	public void setRefrigeratorIncluded(boolean refrigeratorIncluded) {
+		this.refrigeratorIncluded = refrigeratorIncluded;
+	}
+
+	public boolean isLAndSCaped() {
+		return isLAndSCaped;
+	}
+
+	public void setLAndSCaped(boolean isLAndSCaped) {
+		this.isLAndSCaped = isLAndSCaped;
+	}
+
+	public boolean isSprinklerInstalled() {
+		return sprinklerInstalled;
+	}
+
+	public void setSprinklerInstalled(boolean sprinklerInstalled) {
+		this.sprinklerInstalled = sprinklerInstalled;
+	}
+
+	public boolean isDishWasherInstalled() {
+		return dishWasherInstalled;
+	}
+
+	public void setDishWasherInstalled(boolean dishWasherInstalled) {
+		this.dishWasherInstalled = dishWasherInstalled;
+	}
+
+	public boolean isFenceInstalled() {
+		return fenceInstalled;
+	}
+
+	public void setFenceInstalled(boolean fenceInstalled) {
+		this.fenceInstalled = fenceInstalled;
+	}
+
+	public String getHeatingSopurce() {
+		return heatingSopurce;
+	}
+
+	public void setHeatingSopurce(String heatingSopurce) {
+		this.heatingSopurce = heatingSopurce;
+	}
+
+	public boolean isAcInstalled() {
+		return acInstalled;
+	}
+
+	public void setAcInstalled(boolean acInstalled) {
+		this.acInstalled = acInstalled;
+	}
+
+	public boolean isMicrowaveInstalled() {
+		return microwaveInstalled;
+	}
+
+	public void setMicrowaveInstalled(boolean microwaveInstalled) {
+		this.microwaveInstalled = microwaveInstalled;
+	}
+
+	public boolean isHasBasement() {
+		return hasBasement;
+	}
+
+	public void setHasBasement(boolean hasBasement) {
+		this.hasBasement = hasBasement;
+	}
+
+	public boolean isFinishedBasement() {
+		return isFinishedBasement;
+	}
+
+	public void setFinishedBasement(boolean isFinishedBasement) {
+		this.isFinishedBasement = isFinishedBasement;
+	}
+
 	@OneToOne
-	@JoinColumn(name="property_address_id")
+	@JoinColumn(name="owner_address_id")
 	private Address ownerAddress;
 	
 	@OneToOne

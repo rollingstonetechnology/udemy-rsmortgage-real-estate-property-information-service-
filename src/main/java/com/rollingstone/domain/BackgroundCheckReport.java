@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,8 +39,8 @@ public class BackgroundCheckReport {
 	private boolean isCriminalCheckOrder;
 	
 	@Temporal(TemporalType.DATE)
-	@Column(name = "customer_record_order_date", unique = true, nullable = false, length = 10)
-	Date criminalCheckOderedDat;
+	@Column(name = "criminal_record_order_date", unique = true, nullable = false, length = 10)
+	Date criminalCheckOderedDate;
 	
 	@Column(nullable = false)
 	private int creditScoreFExperian;
@@ -52,7 +54,6 @@ public class BackgroundCheckReport {
 	@Column(nullable = false)
 	private int averageCreditScore;
 	
-	List<Address> pastYearsAddresses;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "background_check_report_date", unique = true, nullable = false, length = 10)
@@ -60,6 +61,10 @@ public class BackgroundCheckReport {
 	
 	@Column(nullable = false)
 	private boolean isRecommended;
+	
+	@OneToOne
+	@JoinColumn(name="background_check_order_id")
+	private BackgroundCheckOrder backgroundCheckOrder;
 	
 	public BackgroundCheckReport(){
 		
@@ -97,12 +102,12 @@ public class BackgroundCheckReport {
 		this.isCriminalCheckOrder = isCriminalCheckOrder;
 	}
 
-	public Date getCriminalCheckOderedDat() {
-		return criminalCheckOderedDat;
+	public Date getCriminalCheckOderedDate() {
+		return criminalCheckOderedDate;
 	}
 
-	public void setCriminalCheckOderedDat(Date criminalCheckOderedDat) {
-		this.criminalCheckOderedDat = criminalCheckOderedDat;
+	public void setCriminalCheckOderedDate(Date criminalCheckOderedDate) {
+		this.criminalCheckOderedDate = criminalCheckOderedDate;
 	}
 
 	public int getCreditScoreFExperian() {
@@ -137,13 +142,7 @@ public class BackgroundCheckReport {
 		this.averageCreditScore = averageCreditScore;
 	}
 
-	public List<Address> getPastYearsAddresses() {
-		return pastYearsAddresses;
-	}
-
-	public void setPastYearsAddresses(List<Address> pastYearsAddresses) {
-		this.pastYearsAddresses = pastYearsAddresses;
-	}
+	
 
 	
 	public Date getBackgroundCheckReportDate() {
@@ -162,14 +161,22 @@ public class BackgroundCheckReport {
 		this.isRecommended = isRecommended;
 	}
 
+	
+	public BackgroundCheckOrder getBackgroundCheckOrder() {
+		return backgroundCheckOrder;
+	}
+
+	public void setBackgroundCheckOrder(BackgroundCheckOrder backgroundCheckOrder) {
+		this.backgroundCheckOrder = backgroundCheckOrder;
+	}
+
 	@Override
 	public String toString() {
 		return "BackgroundCheckReport [id=" + id + ", isCreditCheckOrdered=" + isCreditCheckOrdered
 				+ ", creditCheckOderedDate=" + creditCheckOderedDate + ", isCriminalCheckOrder=" + isCriminalCheckOrder
-				+ ", criminalCheckOderedDat=" + criminalCheckOderedDat + ", creditScoreFExperian="
+				+ ", criminalCheckOderedDate=" + criminalCheckOderedDate + ", creditScoreFExperian="
 				+ creditScoreFExperian + ", creditScoreFromTransunion=" + creditScoreFromTransunion
 				+ ", creditScoreFromOthers=" + creditScoreFromOthers + ", averageCreditScore=" + averageCreditScore
-				+ ", pastYearsAddresses=" + pastYearsAddresses + ", backgroundCheckReportDate="
 				+ backgroundCheckReportDate + ", isRecommended=" + isRecommended + "]";
 	}
 
@@ -183,12 +190,11 @@ public class BackgroundCheckReport {
 		result = prime * result + creditScoreFExperian;
 		result = prime * result + creditScoreFromOthers;
 		result = prime * result + creditScoreFromTransunion;
-		result = prime * result + ((criminalCheckOderedDat == null) ? 0 : criminalCheckOderedDat.hashCode());
+		result = prime * result + ((criminalCheckOderedDate == null) ? 0 : criminalCheckOderedDate.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + (isCreditCheckOrdered ? 1231 : 1237);
 		result = prime * result + (isCriminalCheckOrder ? 1231 : 1237);
 		result = prime * result + (isRecommended ? 1231 : 1237);
-		result = prime * result + ((pastYearsAddresses == null) ? 0 : pastYearsAddresses.hashCode());
 		return result;
 	}
 
@@ -219,10 +225,10 @@ public class BackgroundCheckReport {
 			return false;
 		if (creditScoreFromTransunion != other.creditScoreFromTransunion)
 			return false;
-		if (criminalCheckOderedDat == null) {
-			if (other.criminalCheckOderedDat != null)
+		if (criminalCheckOderedDate == null) {
+			if (other.criminalCheckOderedDate != null)
 				return false;
-		} else if (!criminalCheckOderedDat.equals(other.criminalCheckOderedDat))
+		} else if (!criminalCheckOderedDate.equals(other.criminalCheckOderedDate))
 			return false;
 		if (id != other.id)
 			return false;
@@ -232,16 +238,11 @@ public class BackgroundCheckReport {
 			return false;
 		if (isRecommended != other.isRecommended)
 			return false;
-		if (pastYearsAddresses == null) {
-			if (other.pastYearsAddresses != null)
-				return false;
-		} else if (!pastYearsAddresses.equals(other.pastYearsAddresses))
-			return false;
 		return true;
 	}
 
 	public BackgroundCheckReport(long id, boolean isCreditCheckOrdered, Date creditCheckOderedDate,
-			boolean isCriminalCheckOrder, Date criminalCheckOderedDat, int creditScoreFExperian,
+			boolean isCriminalCheckOrder, Date criminalCheckOderedDate, int creditScoreFExperian,
 			int creditScoreFromTransunion, int creditScoreFromOthers, int averageCreditScore,
 			List<Address> pastYearsAddresses, Date backgroundCheckReportDate, boolean isRecommended) {
 		super();
@@ -249,12 +250,11 @@ public class BackgroundCheckReport {
 		this.isCreditCheckOrdered = isCreditCheckOrdered;
 		this.creditCheckOderedDate = creditCheckOderedDate;
 		this.isCriminalCheckOrder = isCriminalCheckOrder;
-		this.criminalCheckOderedDat = criminalCheckOderedDat;
+		this.criminalCheckOderedDate = criminalCheckOderedDate;
 		this.creditScoreFExperian = creditScoreFExperian;
 		this.creditScoreFromTransunion = creditScoreFromTransunion;
 		this.creditScoreFromOthers = creditScoreFromOthers;
 		this.averageCreditScore = averageCreditScore;
-		this.pastYearsAddresses = pastYearsAddresses;
 		this.backgroundCheckReportDate = backgroundCheckReportDate;
 		this.isRecommended = isRecommended;
 	}

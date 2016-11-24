@@ -50,6 +50,11 @@ public class PropertyType {
 		this.propertyTypeDescription = propertyTypeDescription;
 	}
 
+	public PropertyType(){
+		
+	}
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
